@@ -1,0 +1,7 @@
+{
+    "username": "otm",
+    "host": "localhost",
+    "password": "password",
+    "port": "5432",
+    "redishost": "127.0.0.1"
+}
