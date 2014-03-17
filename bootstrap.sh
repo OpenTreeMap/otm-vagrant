@@ -19,7 +19,6 @@ apt-get install -yq gettext
 
 # DB
 apt-get install -yq postgres postgresql-server-dev-9.1 postgresql-contrib postgresql-9.1-postgis
-# Try to get away without em postgresql.conf pg_hba.conf
 service start postgres
 sudo postgres -c psql -c "CREATE USER otm SUPERUSER PASSWORD password"
 sudo postgres -c psql template1 -c "CREATE EXTENSION IF NOT EXISTS hstore"
@@ -34,7 +33,7 @@ pip install -r otm/test-requirements.txt
 # init script?
 
 # PIL
-apt-get install -yq libfreetype6-dev zlib1g-dev libpq-dev python-dev libxml2-dev libgeos-dev libproj-dev libgdal1-dev build-essential # PIL
+apt-get install -yq libfreetype6-dev zlib1g-dev libpq-dev python-dev libxml2-dev libgeos-dev libproj-dev libgdal1-dev build-essential
 
 # ecobenefits - init script
 apt-get install -yq libgeos-dev
