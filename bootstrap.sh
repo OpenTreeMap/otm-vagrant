@@ -25,6 +25,9 @@ sudo postgres -c psql template1 -c "CREATE EXTENSION IF NOT EXISTS hstore"
 sudo postgres -c psql template1 -c "CREATE EXTENSION IF NOT EXISTS postgis"
 sudo postgres -c psql -c "CREATE DATABASE otm OWNER otm"
 
+# PIL
+apt-get install -yq libfreetype6-dev zlib1g-dev libpq-dev python-dev libxml2-dev libgeos-dev libproj-dev libgdal1-dev build-essential
+
 # OTM2
 apt-get install -yq selenium xvfb
 pip install -r otm/requirements.txt
@@ -38,8 +41,6 @@ npm install
 npm install -g grunt-cli
 grunt --dev
 popd
-# PIL
-apt-get install -yq libfreetype6-dev zlib1g-dev libpq-dev python-dev libxml2-dev libgeos-dev libproj-dev libgdal1-dev build-essential
 
 # ecobenefits - init script
 apt-get install -yq libgeos-dev
