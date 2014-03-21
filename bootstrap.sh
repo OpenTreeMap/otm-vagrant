@@ -11,8 +11,8 @@ apt-get update
 apt-get install -yq python-software-properties python-setuptools stow
 easy_install pip
 
-# redis - needed for django and tiler
-apt-get install redis
+# nodejs & redis - needed for django and tiler
+apt-get install nodejs redis
 
 # Django
 apt-get install -yq gettext
@@ -32,6 +32,12 @@ pip install -r otm/dev-requirements.txt
 pip install -r otm/test-requirements.txt
 # init script?
 
+# OTM2 client-side bundle
+pushd /usr/local/otm/app
+npm install
+npm install -g grunt-cli
+grunt --dev
+popd
 # PIL
 apt-get install -yq libfreetype6-dev zlib1g-dev libpq-dev python-dev libxml2-dev libgeos-dev libproj-dev libgdal1-dev build-essential
 
@@ -45,7 +51,7 @@ go get -v github.com/azavea/ecobenefits
 go build github.com/azavea/ecobenefits
 
 # tiler
-apt-get install -yq nodejs libsigc++-2.0-dev libmapnik-dev mapnik-utils
+apt-get install -yq libsigc++-2.0-dev libmapnik-dev mapnik-utils
 push /usr/local/otm/tiler
 npm install
 popd
