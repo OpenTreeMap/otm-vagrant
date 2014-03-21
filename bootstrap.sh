@@ -35,11 +35,14 @@ pip install -r otm/dev-requirements.txt
 pip install -r otm/test-requirements.txt
 # init script?
 
-# OTM2 client-side bundle
 pushd /usr/local/otm/app
+# OTM2 client-side bundle
 npm install
 npm install -g grunt-cli
 grunt --dev
+
+# Run South migrations
+fab me syncdb
 popd
 
 # ecobenefits - init script
