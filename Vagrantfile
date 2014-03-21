@@ -10,12 +10,9 @@ Vagrant.configure("2") do |config|
 
   config.vm.network :forwarded_port, guest: 80, host: 6060
 
-  config.vm.synced_folder "otm2", "/usr/local/otm/app",
-      owner: "otm", group: "vagrant"
-  config.vm.synced_folder "otm2-tiler", "/usr/local/otm/tiler",
-      owner: "otm", group: "vagrant"
-  config.vm.synced_folder "ecobenefits", "/usr/local/otm/ecobenefits",
-      owner: "otm", group: "vagrant"
+  config.vm.synced_folder "otm2", "/usr/local/otm/app"
+  config.vm.synced_folder "otm2-tiler", "/usr/local/otm/tiler"
+  config.vm.synced_folder "ecobenefits", "/usr/local/otm/ecobenefits"
 
   config.vm.provision :shell, :path => "otm2/scripts/bootstrap.sh"
   config.vm.provision :shell, :path => "bootstrap.sh"
