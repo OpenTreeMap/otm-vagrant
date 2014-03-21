@@ -39,6 +39,7 @@ apt-get install -yq libfreetype6-dev zlib1g-dev libpq-dev python-dev libxml2-dev
 apt-get install -yq libgeos-dev
 wget "https://go.googlecode.com/files/go1.2.linux-amd64.tar.gz" -O /tmp/go.tar.gz
 tar -C /usr/local -xzf /tmp/go.tar.gz
+export PATH="$PATH:/usr/local/go/"
 export GOPATH="/usr/local/ecoservice"
 go get -v github.com/azavea/ecobenefits
 go build github.com/azavea/ecobenefits
