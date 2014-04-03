@@ -18,7 +18,7 @@ cd /vagrant
 stow -vv -t / configs
 
 # nodejs & redis - needed for django and tiler
-apt-get install nodejs redis
+apt-get install -yq nodejs redis-server
 
 # Django
 apt-get install -yq gettext
