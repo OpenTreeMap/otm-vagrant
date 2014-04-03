@@ -58,13 +58,13 @@ wget "https://go.googlecode.com/files/go1.2.linux-amd64.tar.gz" -O /tmp/go.tar.g
 tar -C /usr/local -xzf /tmp/go.tar.gz
 export PATH="$PATH:/usr/local/go/bin"
 export GOPATH="/usr/local/ecoservice"
-mkdir /usr/local/ecoservice
+cd /usr/local/ecoservice
 go get -v github.com/azavea/ecobenefits
 go build github.com/azavea/ecobenefits
 
 # tiler
 apt-get install -yq libsigc++-2.0-dev libmapnik-dev mapnik-utils
-cd /usr/local/otm/tiler
+cd /usr/local/tiler
 npm install
 
 # nginx
