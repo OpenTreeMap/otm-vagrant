@@ -63,9 +63,8 @@ go build github.com/azavea/ecobenefits
 
 # tiler
 apt-get install -yq libsigc++-2.0-dev libmapnik-dev mapnik-utils
-push /usr/local/otm/tiler
+cd /usr/local/otm/tiler
 npm install
-popd
 
 # nginx
 apt-get install -yq nginx
