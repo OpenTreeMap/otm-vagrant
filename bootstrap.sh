@@ -53,7 +53,7 @@ grunt --dev
 fab me syncdb
 
 # ecobenefits - init script
-apt-get install -yq libgeos-dev git
+apt-get install -yq libgeos-dev
 wget "https://go.googlecode.com/files/go1.2.linux-amd64.tar.gz" -O /tmp/go.tar.gz
 tar -C /usr/local -xzf /tmp/go.tar.gz
 export PATH="$PATH:/usr/local/go/bin"
