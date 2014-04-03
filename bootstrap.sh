@@ -58,6 +58,7 @@ wget "https://go.googlecode.com/files/go1.2.linux-amd64.tar.gz" -O /tmp/go.tar.g
 tar -C /usr/local -xzf /tmp/go.tar.gz
 export PATH="$PATH:/usr/local/go/bin"
 export GOPATH="/usr/local/ecoservice"
+mkdir /usr/local/ecoservice
 go get -v github.com/azavea/ecobenefits
 go build github.com/azavea/ecobenefits
 
