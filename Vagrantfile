@@ -19,7 +19,6 @@ Vagrant.configure("2") do |config|
 
   config.vm.provider :virtualbox do |vb, override|
     override.vm.box_url = "http://files.vagrantup.com/precise64.box"
-    override.vm.provision :shell, :path => "otm2/scripts/virtualbox.sh"
     vb.customize ["modifyvm", :id, "--memory", 2048, "--cpus", "2"]
   end
   config.vm.provider :lxc do |lxc, override|
