@@ -1,15 +1,21 @@
 #!/bin/sh
 
-# tiler
-apt-add-repository ppa:mapnik/boost
-apt-add-repository ppa:mapnik/v2.1.0
-apt-add-repository ppa:chris-lea/node.js
-apt-add-repository ppa:ubuntugis/ppa
+# Add PPAs
+apt-get update
+
+apt-get install -yq python-software-properties python-setuptools stow git
+
+add-apt-repository -y ppa:mapnik/boost
+add-apt-repository -y ppa:mapnik/v2.1.0
+add-apt-repository -y ppa:chris-lea/node.js
+add-apt-repository -y ppa:ubuntugis/ppa
 
 apt-get update
 
-apt-get install -yq python-software-properties python-setuptools stow
 easy_install pip
+
+cd /vagrant
+stow -vv -t / configs
 
 # nodejs & redis - needed for django and tiler
 apt-get install nodejs redis
@@ -63,7 +69,5 @@ popd
 # nginx
 apt-get install -yq nginx
 # 1) install 2) config file
-
-stow -R -d configs -t / otm2
 
 # start all the things via otm2 fab script
