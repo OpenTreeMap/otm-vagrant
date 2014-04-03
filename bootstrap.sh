@@ -44,7 +44,9 @@ pip install -r test-requirements.txt
 
 # OTM2 client-side bundle
 npm install
-npm install -g grunt-cli
+# Weird issues with newest version of grunt in combination with grunt-browserify
+npm install -g grunt-cli@0.1.9
+# TODO: Keep getting permission issues
 grunt --dev
 
 # Run South migrations
