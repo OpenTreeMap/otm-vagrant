@@ -24,7 +24,7 @@ apt-get install -yq nodejs redis-server
 apt-get install -yq gettext
 
 # DB
-apt-get install -yq postgres postgresql-server-dev-9.1 postgresql-contrib postgresql-9.1-postgis
+apt-get install -yq postgresql postgresql-server-dev-9.1 postgresql-contrib postgresql-9.1-postgis
 service start postgres
 sudo postgres -c psql -c "CREATE USER otm SUPERUSER PASSWORD password"
 sudo postgres -c psql template1 -c "CREATE EXTENSION IF NOT EXISTS hstore"
