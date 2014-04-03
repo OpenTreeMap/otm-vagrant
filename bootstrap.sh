@@ -26,10 +26,10 @@ apt-get install -yq gettext
 # DB
 apt-get install -yq postgresql postgresql-server-dev-9.1 postgresql-contrib postgresql-9.1-postgis
 service start postgres
-sudo postgres -c psql -c "CREATE USER otm SUPERUSER PASSWORD password"
-sudo postgres -c psql template1 -c "CREATE EXTENSION IF NOT EXISTS hstore"
-sudo postgres -c psql template1 -c "CREATE EXTENSION IF NOT EXISTS postgis"
-sudo postgres -c psql -c "CREATE DATABASE otm OWNER otm"
+sudo -u postgres psql -c "CREATE USER otm SUPERUSER PASSWORD 'password'"
+sudo -u postgres psql template1 -c "CREATE EXTENSION IF NOT EXISTS hstore"
+sudo -u postgres psql template1 -c "CREATE EXTENSION IF NOT EXISTS postgis"
+sudo -u postgres psql -c "CREATE DATABASE otm OWNER otm"
 
 # PIL
 apt-get install -yq libfreetype6-dev zlib1g-dev libpq-dev python-dev libxml2-dev libgeos-dev libproj-dev libgdal1-dev build-essential
