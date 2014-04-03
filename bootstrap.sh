@@ -35,13 +35,13 @@ sudo -u postgres psql -c "CREATE DATABASE otm OWNER otm"
 apt-get install -yq libfreetype6-dev zlib1g-dev libpq-dev python-dev libxml2-dev libgeos-dev libproj-dev libgdal1-dev build-essential
 
 # OTM2
-apt-get install -yq selenium xvfb
-pip install -r otm/requirements.txt
-pip install -r otm/dev-requirements.txt
-pip install -r otm/test-requirements.txt
+# TODO: Selenium is not in the Ubuntu repos... apt-get install -yq selenium xvfb
+cd /usr/local/otm/app
+pip install -r requirements.txt
+pip install -r dev-requirements.txt
+pip install -r test-requirements.txt
 # init script?
 
-pushd /usr/local/otm/app
 # OTM2 client-side bundle
 npm install
 npm install -g grunt-cli
@@ -49,7 +49,6 @@ grunt --dev
 
 # Run South migrations
 fab me syncdb
-popd
 
 # ecobenefits - init script
 apt-get install -yq libgeos-dev git
