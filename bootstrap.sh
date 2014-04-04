@@ -48,7 +48,8 @@ npm install -g grunt-cli@0.1.9
 grunt --dev
 
 # Run South migrations
-fab me syncdb
+python opentreemap/manage.py syncdb
+python opentreemap/manage.py migrate
 
 # ecobenefits - init script
 apt-get install -yq libgeos-dev
