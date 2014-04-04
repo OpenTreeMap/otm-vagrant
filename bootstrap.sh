@@ -44,7 +44,6 @@ pip install -r --timeout=30 test-requirements.txt
 npm install
 # Weird issues with newest version of grunt in combination with grunt-browserify
 npm install -g grunt-cli@0.1.9
-# TODO: Keep getting permission issues
 grunt --dev
 
 # Run South migrations
