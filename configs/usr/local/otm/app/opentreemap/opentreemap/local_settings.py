@@ -1,5 +1,8 @@
 EXTRA_UNMANAGED_APPS = ('django_extensions',)
 
+STATIC_ROOT = '/usr/local/otm/static'
+MEDIA_ROOT = '/usr/local/otm/media'
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
