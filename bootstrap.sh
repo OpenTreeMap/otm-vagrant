@@ -26,8 +26,8 @@ apt-get install -yq postgresql postgresql-server-dev-9.1 postgresql-contrib post
 service postgresql start
 sudo -u postgres psql -c "CREATE USER otm SUPERUSER PASSWORD 'password'"
 sudo -u postgres psql template1 -c "CREATE EXTENSION IF NOT EXISTS hstore"
-sudo -u postgres psql template1 -c "CREATE EXTENSION IF NOT EXISTS postgis"
 sudo -u postgres psql -c "CREATE DATABASE otm OWNER otm"
+sudo -u postgres psql otm -c "CREATE EXTENSION IF NOT EXISTS postgis"
 
 # Pillow
 apt-get install -yq libfreetype6-dev zlib1g-dev libpq-dev libxml2-dev
