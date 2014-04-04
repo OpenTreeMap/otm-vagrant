@@ -24,6 +24,9 @@ apt-get install -yq gettext libgeos-dev libproj-dev libgdal1-dev build-essential
 # DB
 apt-get install -yq postgresql postgresql-server-dev-9.1 postgresql-contrib postgresql-9.1-postgis
 service postgresql start
+# Need to drop and recreate cluster to get UTF8 DB encoding
+sudo -u postgres pg_dropcluster --stop 9.1 main
+sudo -u postgres pg_createcluster --start 9.1 main
 sudo -u postgres psql -c "CREATE USER otm SUPERUSER PASSWORD 'password'"
 sudo -u postgres psql template1 -c "CREATE EXTENSION IF NOT EXISTS hstore"
 sudo -u postgres psql -c "CREATE DATABASE otm OWNER otm"
