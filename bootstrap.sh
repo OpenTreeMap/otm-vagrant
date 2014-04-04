@@ -72,4 +72,6 @@ npm install
 apt-get install -yq nginx
 rm /etc/nginx/sites-enabled/default
 
+initctl reload-configuration
+
 # start all the things via otm2 fab script
