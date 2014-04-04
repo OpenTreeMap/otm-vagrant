@@ -68,6 +68,6 @@ npm install
 
 # nginx
 apt-get install -yq nginx
-# TODO: Delete /etc/nginx/sites-enabled/default?
+rm /etc/nginx/sites-enabled/default
 
 # start all the things via otm2 fab script
