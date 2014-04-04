@@ -33,7 +33,7 @@ sudo -u postgres psql -c "CREATE DATABASE otm OWNER otm"
 apt-get install -yq libfreetype6-dev zlib1g-dev libpq-dev libxml2-dev
 
 # OTM2
-# TODO: Selenium is not in the Ubuntu repos... apt-get install -yq selenium xvfb
+apt-get install -yq xvfb firefox
 cd /usr/local/otm/app
 pip install -r requirements.txt
 pip install -r dev-requirements.txt
