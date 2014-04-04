@@ -35,9 +35,9 @@ apt-get install -yq libfreetype6-dev zlib1g-dev libpq-dev libxml2-dev
 # OTM2
 apt-get install -yq xvfb firefox
 cd /usr/local/otm/app
-pip install -r requirements.txt
-pip install -r dev-requirements.txt
-pip install -r test-requirements.txt
+pip install -r --timeout=30 requirements.txt
+pip install -r --timeout=30 dev-requirements.txt
+pip install -r --timeout=30 test-requirements.txt
 # init script?
 
 # OTM2 client-side bundle
