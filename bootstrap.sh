@@ -60,8 +60,8 @@ tar -C /usr/local -xzf /tmp/go.tar.gz
 export PATH="$PATH:/usr/local/go/bin"
 export GOPATH="/usr/local/ecoservice"
 cd /usr/local/ecoservice
-go get -v github.com/azavea/ecobenefits
-go build github.com/azavea/ecobenefits
+go get -v github.com/OpenTreeMap/ecobenefits
+go build github.com/OpenTreeMap/ecobenefits
 
 # tiler
 apt-get install -yq libsigc++-2.0-dev libmapnik-dev mapnik-utils
