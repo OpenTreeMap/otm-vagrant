@@ -12,16 +12,14 @@ add-apt-repository -y ppa:ubuntugis/ppa
 
 apt-get update
 
-easy_install pip
-
 cd /vagrant
 stow -vv -t / configs
 
 # nodejs & redis - needed for django and tiler
 apt-get install -yq nodejs redis-server
 
-# Django
-apt-get install -yq gettext
+# Django + GeoDjango
+apt-get install -yq gettext libgeos-dev libproj-dev libgdal1-dev build-essential python-pip python-dev
 
 # DB
 apt-get install -yq postgresql postgresql-server-dev-9.1 postgresql-contrib postgresql-9.1-postgis
@@ -31,8 +29,8 @@ sudo -u postgres psql template1 -c "CREATE EXTENSION IF NOT EXISTS hstore"
 sudo -u postgres psql template1 -c "CREATE EXTENSION IF NOT EXISTS postgis"
 sudo -u postgres psql -c "CREATE DATABASE otm OWNER otm"
 
-# PIL
-apt-get install -yq libfreetype6-dev zlib1g-dev libpq-dev python-dev libxml2-dev libgeos-dev libproj-dev libgdal1-dev build-essential
+# Pillow
+apt-get install -yq libfreetype6-dev zlib1g-dev libpq-dev libxml2-dev
 
 # OTM2
 # TODO: Selenium is not in the Ubuntu repos... apt-get install -yq selenium xvfb
