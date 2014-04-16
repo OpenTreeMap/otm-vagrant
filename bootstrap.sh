@@ -58,6 +58,8 @@ grunt --dev
 /usr/local/otm/env/bin/python opentreemap/manage.py syncdb
 /usr/local/otm/env/bin/python opentreemap/manage.py migrate
 
+# Copy over static files
+/usr/local/otm/env/bin/python opentreemap/manage.py collectstatic --noinput
 
 # ecobenefits - init script
 apt-get install -yq libgeos-dev
