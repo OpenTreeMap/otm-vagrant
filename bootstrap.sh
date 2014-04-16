@@ -38,6 +38,7 @@ apt-get install -yq libfreetype6-dev zlib1g-dev libpq-dev libxml2-dev
 
 # OTM2
 apt-get install -yq xvfb firefox
+
 cd /usr/local/otm
 virtualenv env
 source env/bin/activate
@@ -57,6 +58,12 @@ grunt --dev
 # Run South migrations
 /usr/local/otm/env/bin/python opentreemap/manage.py syncdb
 /usr/local/otm/env/bin/python opentreemap/manage.py migrate
+
+# Make local directories
+mkdir /usr/local/otm/static
+mkdir /usr/local/otm/media
+chown vagrant:vagrant /usr/local/otm/static
+chown vagrant:vagrant /usr/local/otm/media
 
 # Copy over static files
 /usr/local/otm/env/bin/python opentreemap/manage.py collectstatic --noinput
