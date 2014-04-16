@@ -41,10 +41,11 @@ apt-get install -yq xvfb firefox
 cd /usr/local/otm
 virtualenv env
 source env/bin/activate
+
 cd /usr/local/otm/app
-pip install -r requirements.txt
-pip install -r dev-requirements.txt
-pip install -r test-requirements.txt
+/usr/local/otm/env/bin/pip install -r requirements.txt
+/usr/local/otm/env/bin/pip install -r dev-requirements.txt
+/usr/local/otm/env/bin/pip install -r test-requirements.txt
 # init script?
 
 # OTM2 client-side bundle
@@ -54,8 +55,9 @@ npm install -g grunt-cli@0.1.9
 grunt --dev
 
 # Run South migrations
-python opentreemap/manage.py syncdb
-python opentreemap/manage.py migrate
+/usr/local/otm/env/bin/python opentreemap/manage.py syncdb
+/usr/local/otm/env/bin/python opentreemap/manage.py migrate
+
 
 # ecobenefits - init script
 apt-get install -yq libgeos-dev
