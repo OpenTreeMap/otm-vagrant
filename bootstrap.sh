@@ -82,4 +82,7 @@ rm /etc/nginx/sites-enabled/default
 
 initctl reload-configuration
 
-# start all the things via otm2 fab script
+service otm-unicorn start
+service tiler start
+service ecoservice start
+service nginx start
