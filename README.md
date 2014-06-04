@@ -5,7 +5,7 @@ Vagrant files and scripts for setting up a local testing and development instanc
 
 __NOTE:__ This repository is intended _only_ for development and testing.  It is not intended for setting up a production OTM2 server.
 
-Currently, this setup will only work on a Linux host due to issues with symlinks and VirtualBox shared folders.
+Currently, this setup will not work on a Windows host due to issues with symlinks and VirtualBox shared folders.
 
 To get started, do the following steps:
 
