@@ -23,7 +23,7 @@ apt-get install -yq gettext libgeos-dev libproj-dev libgdal1-dev build-essential
 pip install virtualenv
 
 # DB
-apt-get install -yq postgresql postgresql-server-dev-9.1 postgresql-contrib postgresql-9.1-postgis
+apt-get install -yq postgresql postgresql-server-dev-9.1 postgresql-contrib postgresql-9.1-postgis-2.0
 service postgresql start
 # Need to drop and recreate cluster to get UTF8 DB encoding
 sudo -u postgres pg_dropcluster --stop 9.1 main
