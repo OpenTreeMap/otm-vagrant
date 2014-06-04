@@ -1,5 +1,8 @@
 .vagrant
 .ropeproject
+OTM2
+OTM2-tiler
+ecobenefits
 configs/etc/nginx/fastcgi_params
 configs/etc/nginx/koi-utf
 configs/etc/nginx/koi-win

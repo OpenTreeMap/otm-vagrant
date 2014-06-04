@@ -1,9 +1,0 @@
-[submodule "otm2"]
-	path = otm2
-	url = git://github.com/OpenTreeMap/otm2.git
-[submodule "otm2-tiler"]
-	path = otm2-tiler
-	url = git://github.com/OpenTreeMap/otm2-tiler.git
-[submodule "ecobenefits"]
-	path = ecobenefits
-	url = git://github.com/OpenTreeMap/ecobenefits.git

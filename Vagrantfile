@@ -10,11 +10,11 @@ Vagrant.configure("2") do |config|
 
   config.vm.network :forwarded_port, guest: 80, host: 6060
 
-  config.vm.synced_folder "otm2", "/usr/local/otm/app"
-  config.vm.synced_folder "otm2-tiler", "/usr/local/tiler"
+  config.vm.synced_folder "OTM2", "/usr/local/otm/app"
+  config.vm.synced_folder "OTM2-tiler", "/usr/local/tiler"
   config.vm.synced_folder "ecobenefits", "/usr/local/ecoservice"
 
-  config.vm.provision :shell, :path => "otm2/scripts/bootstrap.sh"
+  config.vm.provision :shell, :path => "OTM2/scripts/bootstrap.sh"
   config.vm.provision :shell, :path => "bootstrap.sh"
 
   config.vm.provider :virtualbox do |vb, override|
