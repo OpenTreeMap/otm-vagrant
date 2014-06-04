@@ -19,7 +19,7 @@ stow -vv -t / configs
 apt-get install -yq nodejs redis-server
 
 # Django + GeoDjango
-apt-get install -yq gettext libgeos-dev libproj-dev libgdal1-dev build-essential python-pip python-dev
+apt-get install -yq gettext libgeos-dev libproj-dev libgdal1-dev build-essential python-pip python-dev sendmail
 pip install virtualenv
 
 # DB
@@ -58,6 +58,7 @@ grunt --dev
 # Run South migrations
 /usr/local/otm/env/bin/python opentreemap/manage.py syncdb
 /usr/local/otm/env/bin/python opentreemap/manage.py migrate
+/usr/local/otm/env/bin/python opentreemap/manage.py create_system_user
 
 # Make local directories
 mkdir /usr/local/otm/static
