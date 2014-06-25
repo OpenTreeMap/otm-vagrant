@@ -1,6 +1,26 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+# Source: http://stackoverflow.com/questions/11784109/detecting-operating-systems-in-ruby
+require 'rbconfig'
+def os
+  @os ||= (
+    host_os = RbConfig::CONFIG['host_os']
+    case host_os
+    when /mswin|msys|mingw|cygwin|bccwin|wince|emc/
+      :windows
+    when /darwin|mac os/
+      :macosx
+    when /linux/
+      :linux
+    when /solaris|bsd/
+      :unix
+    else
+      raise Error::WebDriverError, "unknown os: #{host_os.inspect}"
+    end
+  )
+end
+
 Vagrant.configure("2") do |config|
   # Every Vagrant virtual environment requires a box to build off of.
   config.vm.box = "precise64"
@@ -10,9 +30,16 @@ Vagrant.configure("2") do |config|
 
   config.vm.network :forwarded_port, guest: 80, host: 6060
 
-  config.vm.synced_folder "OTM2", "/usr/local/otm/app"
-  config.vm.synced_folder "OTM2-tiler", "/usr/local/tiler"
-  config.vm.synced_folder "ecobenefits", "/usr/local/ecoservice"
+  if os == :windows
+    config.vm.synced_folder "OTM2", "/usr/local/otm/app", type: "rsync", rsync__exclude: ".git/, node_modules, opentreemap/opentreemap/local_settings.py"
+    config.vm.synced_folder "OTM2-tiler", "/usr/local/tiler", type: "rsync", rsync__exclude: ".git/, node_modules, settings.json"
+    config.vm.synced_folder "ecobenefits", "/usr/local/ecoservice", type: "rsync", rsync__exclude: ".git/"
+    config.vm.synced_folder ".", "/vagrant", type: "rsync", rsync__exclude: ".git/"
+  else
+    config.vm.synced_folder "OTM2", "/usr/local/otm/app"
+    config.vm.synced_folder "OTM2-tiler", "/usr/local/tiler"
+    config.vm.synced_folder "ecobenefits", "/usr/local/ecoservice"    
+  end
 
   config.vm.provision :shell, :path => "OTM2/scripts/bootstrap.sh"
   config.vm.provision :shell, :path => "bootstrap.sh"
