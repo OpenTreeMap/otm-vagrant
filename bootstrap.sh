@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Make the script exit early if any command fails
+set -e
+
 # Add PPAs
 apt-get update
 
