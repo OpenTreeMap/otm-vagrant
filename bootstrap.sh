@@ -44,7 +44,6 @@ apt-get install -yq xvfb firefox
 
 cd /usr/local/otm
 virtualenv env
-source env/bin/activate
 
 cd /usr/local/otm/app
 /usr/local/otm/env/bin/pip install -r requirements.txt
