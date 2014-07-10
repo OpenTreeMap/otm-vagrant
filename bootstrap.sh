@@ -89,6 +89,7 @@ npm install
 # nginx
 apt-get install -yq nginx
 rm /etc/nginx/sites-enabled/default
+ln -s /etc/nginx/sites-available/otm.conf /etc/nginx/sites-enabled/otm
 
 initctl reload-configuration
 
