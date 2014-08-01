@@ -7,6 +7,7 @@ __NOTE:__ This repository is intended _only_ for development and testing.  It is
 
 To get started, do the following steps:
 
+ - Install [Vagrant](http://www.vagrantup.com/) and [VirtualBox](https://www.virtualbox.org/)
  - Clone this repository
  - Run the script `get-repos.sh`
  - Run the command `vagrant up`
