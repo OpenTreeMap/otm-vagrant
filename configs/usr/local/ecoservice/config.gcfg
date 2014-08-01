@@ -9,4 +9,4 @@ host=127.0.0.1
 port=13000
 
 [data]
-path=/usr/local/ecobenefits/data/
+path=/usr/local/ecoservice/data/
