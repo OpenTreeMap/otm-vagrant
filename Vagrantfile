@@ -40,7 +40,7 @@ Vagrant.configure("2") do |config|
     if not File.exist?('.vagrant/machines/default/virtualbox/id')
       # VM not set up yet -- rsync everything
       config.vm.synced_folder ".", "/vagrant", type: "rsync", rsync__exclude: ".git/"
-      config.vm.synced_folder "OTM2", "/usr/local/otm/app", type: "rsync", rsync__exclude: [".git/", "node_modules", "opentreemap/opentreemap/local_settings.py"]
+      config.vm.synced_folder "OTM2", "/usr/local/otm/app", type: "rsync", rsync__exclude: [".git/", "node_modules", "opentreemap/opentreemap/settings/local_settings.py"]
 
     else
       # VM already set up.
@@ -49,9 +49,9 @@ Vagrant.configure("2") do |config|
 
       # Use a true shared folder for "opentreemap" (for convenience) (works because it uses no symlinks)
       config.vm.synced_folder "OTM2/opentreemap", "/usr/local/otm/app/opentreemap"
-      if not File.exist?('OTM2/opentreemap/opentreemap/local_settings.py')
+      if not File.exist?('OTM2/opentreemap/opentreemap/settings/local_settings.py')
         # local_settings.py was created on the guest, but we need to create it on the host since we're sharing its folder.
-        FileUtils.cp('configs/usr/local/otm/app/opentreemap/opentreemap/local_settings.py', 'OTM2/opentreemap/opentreemap')
+        FileUtils.cp('configs/usr/local/otm/app/opentreemap/opentreemap/settings/local_settings.py', 'OTM2/opentreemap/opentreemap')
       end
     end
 
