@@ -1,0 +1,12 @@
+before_install: ./get-repos.sh
+
+install:
+    - wget https://dl.bintray.com/mitchellh/vagrant/vagrant_1.6.5_x86_64.deb
+    - dpkg -i vagrant_1.6.5_x86_64.deb
+    - apt-get update
+    - apt-get install lxc
+    - vagrant plugin install vagrant-lxc
+
+script:
+    - vagrant up --provider lxc
+    - vagrant ssh -c '/vagrant/test.sh'
