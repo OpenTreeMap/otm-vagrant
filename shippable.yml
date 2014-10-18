@@ -4,7 +4,7 @@ install:
     - wget https://dl.bintray.com/mitchellh/vagrant/vagrant_1.6.5_x86_64.deb
     - sudo dpkg -i vagrant_1.6.5_x86_64.deb
     - sudo apt-get update
-    - sudo apt-get install -yq lxc
+    - sudo apt-get install -yq lxc redir
     - sudo vagrant plugin install vagrant-lxc
 
 script:
