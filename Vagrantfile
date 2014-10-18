@@ -33,7 +33,7 @@ Vagrant.configure("2") do |config|
   if os != :windows
     config.vm.synced_folder "OTM2", "/usr/local/otm/app"
     config.vm.synced_folder "OTM2-tiler", "/usr/local/tiler"
-    config.vm.synced_folder "ecobenefits", "/usr/local/ecoservice"    
+    config.vm.synced_folder "ecobenefits", "/usr/local/ecoservice"
 
   else
     # For Windows hosts, work around limitation that symbolic links don't work in shared folders
@@ -59,15 +59,15 @@ Vagrant.configure("2") do |config|
     config.vm.synced_folder "ecobenefits", "/usr/local/ecoservice", type: "rsync", rsync__exclude: ".git/"
   end
 
-  config.vm.provision :shell, :path => "OTM2/scripts/bootstrap.sh"
-  config.vm.provision :shell, :path => "bootstrap.sh"
+#   config.vm.provision :shell, :path => "OTM2/scripts/bootstrap.sh"
+#   config.vm.provision :shell, :path => "bootstrap.sh"
 
   config.vm.provider :virtualbox do |vb, override|
     override.vm.box_url = "http://files.vagrantup.com/precise64.box"
     vb.customize ["modifyvm", :id, "--memory", 2048, "--cpus", "2"]
   end
   config.vm.provider :lxc do |lxc, override|
-    override.vm.box_url = "http://bit.ly/vagrant-lxc-precise64-2013-10-23"
+    override.vm.box = "fgrehm/precise64-lxc"
     lxc.customize "cgroup.memory.limit_in_bytes", '2048M'
   end
 end
