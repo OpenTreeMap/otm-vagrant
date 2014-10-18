@@ -68,6 +68,7 @@ Vagrant.configure("2") do |config|
   end
   config.vm.provider :lxc do |lxc, override|
     override.vm.box = "fgrehm/precise64-lxc"
+    lxc.backingstore = 'none'
     lxc.customize "cgroup.memory.limit_in_bytes", '2048M'
   end
 end
