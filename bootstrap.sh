@@ -39,8 +39,10 @@ sudo -u postgres psql otm -c "CREATE EXTENSION IF NOT EXISTS postgis"
 # Pillow
 apt-get install -yq libfreetype6-dev zlib1g-dev libpq-dev libxml2-dev
 
-# OTM2
+# OTM2 test requirements
 apt-get install -yq xvfb firefox
+pip install flake8
+npm install -g testem
 
 cd /usr/local/otm
 virtualenv env
@@ -49,7 +51,6 @@ cd /usr/local/otm/app
 /usr/local/otm/env/bin/pip install -r requirements.txt
 /usr/local/otm/env/bin/pip install -r dev-requirements.txt
 /usr/local/otm/env/bin/pip install -r test-requirements.txt
-# init script?
 
 # OTM2 client-side bundle
 npm install

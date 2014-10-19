@@ -1,0 +1,15 @@
+build_environment: Ubuntu 13.10
+
+before_install: ./get-repos.sh
+
+install:
+    - wget https://dl.bintray.com/mitchellh/vagrant/vagrant_1.6.5_x86_64.deb
+    - sudo dpkg -i vagrant_1.6.5_x86_64.deb
+    - sudo apt-get update
+    - sudo apt-get install -yq lxc redir cgroup-lite ethtool
+    - sudo vagrant plugin install vagrant-lxc
+
+script:
+    - ethtool -K lxcbr0 tx off
+    - sudo vagrant up --provider lxc
+    - sudo vagrant ssh -c '/vagrant/test.sh'
