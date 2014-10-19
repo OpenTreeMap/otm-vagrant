@@ -10,5 +10,5 @@ install:
     - sudo vagrant plugin install vagrant-lxc
 
 script:
-    - sudo vagrant up --provider lxc
+    - VAGRANT_LOG=debug sudo vagrant up --provider lxc
     - sudo vagrant ssh -c '/vagrant/test.sh'
