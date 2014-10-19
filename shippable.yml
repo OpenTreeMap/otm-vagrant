@@ -5,8 +5,8 @@ before_install: ./get-repos.sh
 install:
     - wget https://dl.bintray.com/mitchellh/vagrant/vagrant_1.6.5_x86_64.deb
     - sudo dpkg -i vagrant_1.6.5_x86_64.deb
-    - sudo apt-get update
-    - sudo apt-get install -yq lxc redir lxc-templates cgroup-lite
+    - sudo apt-get update && sudo apt-get dist-upgrade
+    - sudo apt-get install -yq redir lxc-templates cgroup-lite
     - sudo vagrant plugin install vagrant-lxc
 
 script:
