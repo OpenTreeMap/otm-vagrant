@@ -59,8 +59,8 @@ Vagrant.configure("2") do |config|
     config.vm.synced_folder "ecobenefits", "/usr/local/ecoservice", type: "rsync", rsync__exclude: ".git/"
   end
 
-#   config.vm.provision :shell, :path => "OTM2/scripts/bootstrap.sh"
-#   config.vm.provision :shell, :path => "bootstrap.sh"
+  config.vm.provision :shell, :path => "OTM2/scripts/bootstrap.sh"
+  config.vm.provision :shell, :path => "bootstrap.sh"
 
   config.vm.provider :virtualbox do |vb, override|
     override.vm.box_url = "http://files.vagrantup.com/precise64.box"
