@@ -6,7 +6,7 @@ set -e
 # Add PPAs
 apt-get update
 
-apt-get install -yq python-software-properties python-setuptools stow git
+apt-get install -yq python-software-properties python-setuptools git
 
 add-apt-repository -y ppa:mapnik/boost
 add-apt-repository -y ppa:mapnik/v2.1.0
@@ -15,8 +15,8 @@ add-apt-repository -y ppa:ubuntugis/ppa
 
 apt-get update
 
-cd /vagrant
-stow -vv -t / configs
+cp -rfT /vagrant/configs /
+
 
 # nodejs & redis - needed for django and tiler
 apt-get install -yq nodejs redis-server
