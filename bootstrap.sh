@@ -28,13 +28,17 @@ pip install virtualenv
 # DB
 apt-get install -yq postgresql postgresql-server-dev-9.1 postgresql-contrib postgresql-9.1-postgis-2.0
 service postgresql start
-# Need to drop and recreate cluster to get UTF8 DB encoding
-sudo -u postgres pg_dropcluster --stop 9.1 main
-sudo -u postgres pg_createcluster --start 9.1 main  --locale="en_US.UTF-8"
-sudo -u postgres psql -c "CREATE USER otm SUPERUSER PASSWORD 'password'"
-sudo -u postgres psql template1 -c "CREATE EXTENSION IF NOT EXISTS hstore"
-sudo -u postgres psql -c "CREATE DATABASE otm OWNER otm"
-sudo -u postgres psql otm -c "CREATE EXTENSION IF NOT EXISTS postgis"
+
+# Don't do any DB stuff if it already exists
+if ! sudo -u postgres psql otm -c ''; then
+    # Need to drop and recreate cluster to get UTF8 DB encoding
+    sudo -u postgres pg_dropcluster --stop 9.1 main
+    sudo -u postgres pg_createcluster --start 9.1 main  --locale="en_US.UTF-8"
+    sudo -u postgres psql -c "CREATE USER otm SUPERUSER PASSWORD 'password'"
+    sudo -u postgres psql template1 -c "CREATE EXTENSION IF NOT EXISTS hstore"
+    sudo -u postgres psql -c "CREATE DATABASE otm OWNER otm"
+    sudo -u postgres psql otm -c "CREATE EXTENSION IF NOT EXISTS postgis"
+fi
 
 # Pillow
 apt-get install -yq libfreetype6-dev zlib1g-dev libpq-dev libxml2-dev
