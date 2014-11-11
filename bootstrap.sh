@@ -17,6 +17,10 @@ apt-get update
 
 cp -rfT /vagrant/configs /
 
+# Stop all the services if they are already running
+service otm-unicorn stop || true
+service tiler stop || true
+service ecoservice stop || true
 
 # nodejs & redis - needed for django and tiler
 apt-get install -yq nodejs redis-server
