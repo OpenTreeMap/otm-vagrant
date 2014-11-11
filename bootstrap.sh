@@ -67,8 +67,8 @@ grunt --dev
 /usr/local/otm/env/bin/python opentreemap/manage.py create_system_user
 
 # Make local directories
-mkdir /usr/local/otm/static
-mkdir /usr/local/otm/media
+mkdir /usr/local/otm/static || true
+mkdir /usr/local/otm/media || true
 chown vagrant:vagrant /usr/local/otm/static
 chown vagrant:vagrant /usr/local/otm/media
 
