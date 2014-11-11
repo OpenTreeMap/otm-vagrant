@@ -22,7 +22,7 @@ stow -vv -t / configs
 apt-get install -yq nodejs redis-server
 
 # Django + GeoDjango
-apt-get install -yq gettext libgeos-dev libproj-dev libgdal1-dev build-essential python-pip python-dev sendmail
+apt-get install -yq gettext libgeos-dev libproj-dev libgdal1-dev build-essential python-pip python-dev
 pip install virtualenv
 
 # DB
