@@ -76,14 +76,19 @@ chown vagrant:vagrant /usr/local/otm/media
 /usr/local/otm/env/bin/python opentreemap/manage.py collectstatic --noinput
 
 # ecobenefits - init script
-apt-get install -yq libgeos-dev
-wget "https://go.googlecode.com/files/go1.2.linux-amd64.tar.gz" -O /tmp/go.tar.gz
-tar -C /usr/local -xzf /tmp/go.tar.gz
-export PATH="$PATH:/usr/local/go/bin"
+apt-get install -yq libgeos-dev mercurial
 export GOPATH="/usr/local/ecoservice"
 cd /usr/local/ecoservice
-go get -v github.com/OpenTreeMap/ecobenefits
-go build github.com/OpenTreeMap/ecobenefits
+if ! go version; then
+    wget "https://go.googlecode.com/files/go1.2.linux-amd64.tar.gz" -O /tmp/go.tar.gz
+    tar -C /usr/local -xzf /tmp/go.tar.gz
+    sudo ln -s /usr/local/go/bin/go /usr/local/bin/go
+fi
+if ! which godep; then
+    go get github.com/tools/godep
+    sudo ln -s /usr/local/ecoservice/bin/godep /usr/local/bin/godep
+fi
+make release
 
 # tiler
 apt-get install -yq libsigc++-2.0-dev libmapnik-dev mapnik-utils
