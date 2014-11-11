@@ -30,6 +30,6 @@ For further help on how to use `create_instance`, run `./manage.py create_instan
 
 ## Windows
 
-To run on Windows you must install [Cygwin](https://www.cygwin.com) (including `rsync`) and start a Unix shell like `bash` to run the install scripts.
+To run on Windows you must install [Cygwin](https://www.cygwin.com) (including `rsync` and `openssh`) and start a Unix shell like `bash` to run the install scripts.
 
 On Windows the OTM source code is shared with the virtual machine via a one-way `rsync` from Windows host to Ubuntu guest. When you update source code files you must run `vagrant rsync` from your Windows Unix shell. See also [vagrant rsync-auto](http://docs.vagrantup.com/v2/cli/rsync-auto.html).
