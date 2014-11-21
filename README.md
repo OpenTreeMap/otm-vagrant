@@ -16,7 +16,7 @@ This will give you a working installation of OTM2, but without any maps.
 
 To create a map do the following steps:
 
- - Create a user from your web browser (the URL should be `localhost:6060`). The email will be written to a file in `/usr/local/otm/emails/` inside the VM
+ - Create a user from your web browser (the URL should be `localhost:7070`). The email will be written to a file in `/usr/local/otm/emails/` inside the VM
  - SSH into the vagrant VM with `vagrant ssh`
  - Read the email with your user activation link (`cat /usr/local/otm/emails/*`) and activate the user by pasting the URL in it into your browser
  - Source the virtual environment using `source /usr/local/otm/env/bin/activate`

@@ -28,7 +28,7 @@ Vagrant.configure("2") do |config|
   # for selenium tests
   config.ssh.forward_x11 = true
 
-  config.vm.network :forwarded_port, guest: 80, host: 6060
+  config.vm.network :forwarded_port, guest: 80, host: 7070
 
   if os != :windows
     config.vm.synced_folder "OTM2", "/usr/local/otm/app"
