@@ -6,7 +6,7 @@ set -e
 # Add PPAs
 apt-get update
 
-apt-get install -yq python-software-properties python-setuptools stow git
+apt-get install -yq python-software-properties python-setuptools git
 
 add-apt-repository -y ppa:mapnik/boost
 add-apt-repository -y ppa:mapnik/v2.1.0
@@ -15,8 +15,12 @@ add-apt-repository -y ppa:ubuntugis/ppa
 
 apt-get update
 
-cd /vagrant
-stow -vv -t / configs
+cp -rfT /vagrant/configs /
+
+# Stop all the services if they are already running
+service otm-unicorn stop || true
+service tiler stop || true
+service ecoservice stop || true
 
 # nodejs & redis - needed for django and tiler
 apt-get install -yq nodejs redis-server
@@ -28,13 +32,17 @@ pip install virtualenv
 # DB
 apt-get install -yq postgresql postgresql-server-dev-9.1 postgresql-contrib postgresql-9.1-postgis-2.0
 service postgresql start
-# Need to drop and recreate cluster to get UTF8 DB encoding
-sudo -u postgres pg_dropcluster --stop 9.1 main
-sudo -u postgres pg_createcluster --start 9.1 main  --locale="en_US.UTF-8"
-sudo -u postgres psql -c "CREATE USER otm SUPERUSER PASSWORD 'password'"
-sudo -u postgres psql template1 -c "CREATE EXTENSION IF NOT EXISTS hstore"
-sudo -u postgres psql -c "CREATE DATABASE otm OWNER otm"
-sudo -u postgres psql otm -c "CREATE EXTENSION IF NOT EXISTS postgis"
+
+# Don't do any DB stuff if it already exists
+if ! sudo -u postgres psql otm -c ''; then
+    # Need to drop and recreate cluster to get UTF8 DB encoding
+    sudo -u postgres pg_dropcluster --stop 9.1 main
+    sudo -u postgres pg_createcluster --start 9.1 main  --locale="en_US.UTF-8"
+    sudo -u postgres psql -c "CREATE USER otm SUPERUSER PASSWORD 'password'"
+    sudo -u postgres psql template1 -c "CREATE EXTENSION IF NOT EXISTS hstore"
+    sudo -u postgres psql -c "CREATE DATABASE otm OWNER otm"
+    sudo -u postgres psql otm -c "CREATE EXTENSION IF NOT EXISTS postgis"
+fi
 
 # Pillow
 apt-get install -yq libfreetype6-dev zlib1g-dev libpq-dev libxml2-dev
@@ -63,8 +71,8 @@ grunt --dev
 /usr/local/otm/env/bin/python opentreemap/manage.py create_system_user
 
 # Make local directories
-mkdir /usr/local/otm/static
-mkdir /usr/local/otm/media
+mkdir /usr/local/otm/static || true
+mkdir /usr/local/otm/media || true
 chown vagrant:vagrant /usr/local/otm/static
 chown vagrant:vagrant /usr/local/otm/media
 
@@ -72,14 +80,19 @@ chown vagrant:vagrant /usr/local/otm/media
 /usr/local/otm/env/bin/python opentreemap/manage.py collectstatic --noinput
 
 # ecobenefits - init script
-apt-get install -yq libgeos-dev
-wget "https://go.googlecode.com/files/go1.2.linux-amd64.tar.gz" -O /tmp/go.tar.gz
-tar -C /usr/local -xzf /tmp/go.tar.gz
-export PATH="$PATH:/usr/local/go/bin"
+apt-get install -yq libgeos-dev mercurial
 export GOPATH="/usr/local/ecoservice"
 cd /usr/local/ecoservice
-go get -v github.com/OpenTreeMap/ecobenefits
-go build github.com/OpenTreeMap/ecobenefits
+if ! go version; then
+    wget "https://go.googlecode.com/files/go1.2.linux-amd64.tar.gz" -O /tmp/go.tar.gz
+    tar -C /usr/local -xzf /tmp/go.tar.gz
+    sudo ln -s /usr/local/go/bin/go /usr/local/bin/go
+fi
+if ! which godep; then
+    go get github.com/tools/godep
+    sudo ln -s /usr/local/ecoservice/bin/godep /usr/local/bin/godep
+fi
+make release
 
 # tiler
 apt-get install -yq libsigc++-2.0-dev libmapnik-dev mapnik-utils
@@ -88,8 +101,8 @@ npm install
 
 # nginx
 apt-get install -yq nginx
-rm /etc/nginx/sites-enabled/default
-ln -s /etc/nginx/sites-available/otm.conf /etc/nginx/sites-enabled/otm
+rm /etc/nginx/sites-enabled/default || true
+ln -sf /etc/nginx/sites-available/otm.conf /etc/nginx/sites-enabled/otm
 
 initctl reload-configuration
 
