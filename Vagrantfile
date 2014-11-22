@@ -44,7 +44,7 @@ Vagrant.configure("2") do |config|
     # Use a true shared folder for "opentreemap" (for convenience) (works because it uses no symlinks)
     config.vm.synced_folder "OTM2/opentreemap", "/usr/local/otm/app/opentreemap"
 
-    config.vm.synced_folder ".", "/vagrant", type: "rsync", rsync__exclude: [".git/", "configs/usr/local/otm/app/opentreemap/opentreemap/settings/local_settings.py"]
+    config.vm.synced_folder ".", "/vagrant", type: "rsync", rsync__exclude: [".git/"]
 
     config.vm.synced_folder "OTM2-tiler", "/usr/local/tiler", type: "rsync", rsync__exclude: [".git/", "node_modules", "settings.json"]
     config.vm.synced_folder "ecobenefits", "/usr/local/ecoservice", type: "rsync", rsync__exclude: ".git/"

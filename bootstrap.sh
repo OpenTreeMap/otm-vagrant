@@ -15,7 +15,7 @@ add-apt-repository -y ppa:ubuntugis/ppa
 
 apt-get update
 
-cp -rfT /vagrant/configs /
+cp -rfTv /vagrant/configs /
 
 # Stop all the services if they are already running
 service otm-unicorn stop || true
