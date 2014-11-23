@@ -81,7 +81,6 @@ chown vagrant:vagrant /usr/local/otm/media
 
 # ecobenefits - init script
 apt-get install -yq libgeos-dev mercurial
-export GOPATH="/usr/local/ecoservice"
 cd /usr/local/ecoservice
 if ! go version; then
     wget "https://go.googlecode.com/files/go1.2.linux-amd64.tar.gz" -O /tmp/go.tar.gz
@@ -89,9 +88,12 @@ if ! go version; then
     sudo ln -s /usr/local/go/bin/go /usr/local/bin/go
 fi
 if ! which godep; then
+    export GOPATH="/home/vagrant/.gopath"
+    mkdir $GOPATH || true
     go get github.com/tools/godep
-    sudo ln -s /usr/local/ecoservice/bin/godep /usr/local/bin/godep
+    sudo ln -sf $GOPATH/bin/godep /usr/local/bin/godep
 fi
+export GOPATH="/usr/local/ecoservice"
 make release
 
 # tiler
