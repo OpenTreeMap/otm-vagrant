@@ -21,6 +21,7 @@ cp -rfTv /vagrant/configs /
 service otm-unicorn stop || true
 service tiler stop || true
 service ecoservice stop || true
+service celeryd stop || true
 
 # nodejs & redis - needed for django and tiler
 apt-get install -yq nodejs redis-server
@@ -111,4 +112,5 @@ initctl reload-configuration
 service otm-unicorn start
 service tiler start
 service ecoservice start
+service celeryd start
 service nginx start
