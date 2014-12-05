@@ -1,7 +1,12 @@
 #!/bin/sh
 
-for url in https://github.com/OpenTreeMap/OTM2.git https://github.com/OpenTreeMap/ecobenefits.git https://github.com/OpenTreeMap/OTM2-tiler.git
+for REPO in OTM2 ecobenefits OTM2-tiler
 do
     echo
-    git clone "$url"
+    if [ -e $REPO ]; then
+        cd $REPO && git pull
+        cd ..
+    else
+        git clone "https://github.com/OpenTreeMap/$REPO.git"
+    fi
 done
