@@ -48,8 +48,10 @@ fi
 # Pillow
 apt-get install -yq libfreetype6-dev zlib1g-dev libpq-dev libxml2-dev
 
-# OTM2
+# OTM2 (UI testing)
 apt-get install -yq xvfb firefox
+# OTM2 (JS testing)
+npm install -g testem
 
 cd /usr/local/otm
 virtualenv env
@@ -58,7 +60,6 @@ cd /usr/local/otm/app
 /usr/local/otm/env/bin/pip install -r requirements.txt
 /usr/local/otm/env/bin/pip install -r dev-requirements.txt
 /usr/local/otm/env/bin/pip install -r test-requirements.txt
-# init script?
 
 # OTM2 client-side bundle
 npm install
