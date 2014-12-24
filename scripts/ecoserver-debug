@@ -1,0 +1,4 @@
+sudo service ecoservice stop || /bin/true
+cd /usr/local/ecoservice
+make release
+./ecoservice/ecobenefits -configpath=./config.gcfg
