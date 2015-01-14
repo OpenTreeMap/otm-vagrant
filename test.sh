@@ -16,7 +16,7 @@ testem ci
 
 source /usr/local/otm/env/bin/activate
 flake8 --exclude migrations,opentreemap/settings/local_settings.py opentreemap
-# Need to run grunt before runnign the UI tests
+# Need to run grunt before running the UI tests
 grunt
 python opentreemap/manage.py test
-python opentreemap/manage.py test --live-server-tests
+python opentreemap/manage.py test  -p 'uitest*.py'
