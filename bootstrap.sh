@@ -41,6 +41,7 @@ if ! sudo -u postgres psql otm -c ''; then
     sudo -u postgres pg_createcluster --start 9.1 main  --locale="en_US.UTF-8"
     sudo -u postgres psql -c "CREATE USER otm SUPERUSER PASSWORD 'password'"
     sudo -u postgres psql template1 -c "CREATE EXTENSION IF NOT EXISTS hstore"
+    sudo -u postgres psql template1 -c "CREATE EXTENSION IF NOT EXISTS fuzzystrmatch"
     sudo -u postgres psql -c "CREATE DATABASE otm OWNER otm"
     sudo -u postgres psql otm -c "CREATE EXTENSION IF NOT EXISTS postgis"
 fi
