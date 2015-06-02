@@ -31,26 +31,26 @@ Vagrant.configure("2") do |config|
   config.vm.network :forwarded_port, guest: 80, host: 7070
 
   if os != :windows
-    config.vm.synced_folder "OTM2", "/usr/local/otm/app"
-    config.vm.synced_folder "OTM2-tiler", "/usr/local/tiler"
-    config.vm.synced_folder "ecobenefits", "/usr/local/ecoservice"
+    config.vm.synced_folder "otm-core", "/usr/local/otm/app"
+    config.vm.synced_folder "otm-tiler", "/usr/local/tiler"
+    config.vm.synced_folder "otm-ecoservice", "/usr/local/ecoservice"
 
   else
     # For Windows hosts, work around limitation that symbolic links don't work
     # in virtualbox shared folders using rsync
-    config.vm.synced_folder "OTM2", "/usr/local/otm/app", type: "rsync",
+    config.vm.synced_folder "otm-core", "/usr/local/otm/app", type: "rsync",
         rsync__exclude: [".git/", "node_modules", "opentreemap"]
 
     # Use a true shared folder for "opentreemap" (for convenience) (works because it uses no symlinks)
-    config.vm.synced_folder "OTM2/opentreemap", "/usr/local/otm/app/opentreemap"
+    config.vm.synced_folder "otm-core/opentreemap", "/usr/local/otm/app/opentreemap"
 
     config.vm.synced_folder ".", "/vagrant", type: "rsync", rsync__exclude: [".git/"]
 
-    config.vm.synced_folder "OTM2-tiler", "/usr/local/tiler", type: "rsync", rsync__exclude: [".git/", "node_modules", "settings.json"]
-    config.vm.synced_folder "ecobenefits", "/usr/local/ecoservice", type: "rsync", rsync__exclude: ".git/"
+    config.vm.synced_folder "otm-tiler", "/usr/local/tiler", type: "rsync", rsync__exclude: [".git/", "node_modules", "settings.json"]
+    config.vm.synced_folder "otm-ecoservice", "/usr/local/ecoservice", type: "rsync", rsync__exclude: ".git/"
   end
 
-  config.vm.provision :shell, :path => "OTM2/scripts/bootstrap.sh"
+  config.vm.provision :shell, :path => "otm-core/scripts/bootstrap.sh"
   config.vm.provision :shell, :path => "bootstrap.sh"
 
   config.vm.provider :virtualbox do |vb, override|

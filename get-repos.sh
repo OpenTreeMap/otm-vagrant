@@ -1,6 +1,6 @@
 #!/bin/sh
 
-for REPO in OTM2 ecobenefits OTM2-tiler
+for REPO in otm-core otm-ecoservice otm-tiler
 do
     echo
     if [ -e $REPO ]; then
