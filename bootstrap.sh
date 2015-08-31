@@ -68,8 +68,7 @@ npm install
 npm install -g grunt-cli@0.1.9
 grunt --dev
 
-# Run South migrations
-/usr/local/otm/env/bin/python opentreemap/manage.py syncdb
+# Run Django migrations
 /usr/local/otm/env/bin/python opentreemap/manage.py migrate
 /usr/local/otm/env/bin/python opentreemap/manage.py create_system_user
 
@@ -86,7 +85,7 @@ chown vagrant:vagrant /usr/local/otm/media
 apt-get install -yq libgeos-dev mercurial
 cd /usr/local/ecoservice
 if ! go version; then
-    wget "https://go.googlecode.com/files/go1.2.linux-amd64.tar.gz" -O /tmp/go.tar.gz
+    wget -q "https://go.googlecode.com/files/go1.2.linux-amd64.tar.gz" -O /tmp/go.tar.gz
     tar -C /usr/local -xzf /tmp/go.tar.gz
     sudo ln -s /usr/local/go/bin/go /usr/local/bin/go
 fi
