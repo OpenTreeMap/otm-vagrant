@@ -25,7 +25,6 @@ apt-get install -yq nodejs redis-server
 
 # Django + GeoDjango
 apt-get install -yq gettext libgeos-dev libproj-dev libgdal1-dev build-essential python-pip python-dev
-pip install virtualenv
 
 # DB
 apt-get install -yq postgresql postgresql-server-dev-9.3 postgresql-contrib postgresql-9.3-postgis-2.1
@@ -54,12 +53,17 @@ apt-get install -yq xvfb firefox
 npm install -g testem
 
 cd /usr/local/otm
-virtualenv env
 
 cd /usr/local/otm/app
-/usr/local/otm/env/bin/pip install -r requirements.txt
-/usr/local/otm/env/bin/pip install -r dev-requirements.txt
-/usr/local/otm/env/bin/pip install -r test-requirements.txt
+pip install -r requirements.txt
+pip install -r dev-requirements.txt
+pip install -r test-requirements.txt
+
+# Make local directories
+mkdir -p /usr/local/otm/static || true
+mkdir -p /usr/local/otm/media || true
+chown vagrant:vagrant /usr/local/otm/static
+chown vagrant:vagrant /usr/local/otm/media
 
 # OTM2 client-side bundle
 npm install
@@ -68,17 +72,8 @@ npm install -g grunt-cli@0.1.9
 grunt --dev
 
 # Run Django migrations
-/usr/local/otm/env/bin/python opentreemap/manage.py migrate
-/usr/local/otm/env/bin/python opentreemap/manage.py create_system_user
-
-# Make local directories
-mkdir /usr/local/otm/static || true
-mkdir /usr/local/otm/media || true
-chown vagrant:vagrant /usr/local/otm/static
-chown vagrant:vagrant /usr/local/otm/media
-
-# Copy over static files
-/usr/local/otm/env/bin/python opentreemap/manage.py collectstatic --noinput
+python opentreemap/manage.py migrate
+python opentreemap/manage.py create_system_user
 
 # ecobenefits - init script
 apt-get install -yq libgeos-dev mercurial
