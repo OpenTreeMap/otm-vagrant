@@ -69,7 +69,7 @@ chown vagrant:vagrant /usr/local/otm/media
 npm install
 # Weird issues with newest version of grunt in combination with grunt-browserify
 npm install -g grunt-cli@0.1.9
-grunt --dev
+sudo -u vagrant grunt --dev
 
 # Run Django migrations
 python opentreemap/manage.py migrate
@@ -90,7 +90,7 @@ if ! which godep; then
     sudo ln -sf $GOPATH/bin/godep /usr/local/bin/godep
 fi
 export GOPATH="/usr/local/ecoservice"
-make release
+make build
 
 # tiler
 apt-get install -yq libsigc++-2.0-dev libmapnik-dev mapnik-utils
@@ -108,4 +108,4 @@ service otm-unicorn start
 service tiler start
 service ecoservice start
 service celeryd start
-service nginx start
+service nginx restart
