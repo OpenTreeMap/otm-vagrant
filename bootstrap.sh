@@ -8,10 +8,7 @@ apt-get update
 
 apt-get install -yq python-software-properties python-setuptools git
 
-add-apt-repository -y ppa:mapnik/boost
-add-apt-repository -y ppa:mapnik/v2.1.0
 add-apt-repository -y ppa:chris-lea/node.js
-add-apt-repository -y ppa:ubuntugis/ppa
 
 apt-get update
 
@@ -31,20 +28,22 @@ apt-get install -yq gettext libgeos-dev libproj-dev libgdal1-dev build-essential
 pip install virtualenv
 
 # DB
-apt-get install -yq postgresql postgresql-server-dev-9.1 postgresql-contrib postgresql-9.1-postgis-2.0
+apt-get install -yq postgresql postgresql-server-dev-9.3 postgresql-contrib postgresql-9.3-postgis-2.1
 service postgresql start
 
 # Don't do any DB stuff if it already exists
+set +e
 if ! sudo -u postgres psql otm -c ''; then
     # Need to drop and recreate cluster to get UTF8 DB encoding
-    sudo -u postgres pg_dropcluster --stop 9.1 main
-    sudo -u postgres pg_createcluster --start 9.1 main  --locale="en_US.UTF-8"
-    sudo -u postgres psql -c "CREATE USER otm SUPERUSER PASSWORD 'password'"
+    sudo -u postgres pg_dropcluster --stop 9.3 main
+    sudo -u postgres pg_createcluster --start 9.3 main  --locale="en_US.UTF-8"
+    sudo -u postgres psql -c "CREATE USER otm SUPERUSER PASSWORD 'otm'"
     sudo -u postgres psql template1 -c "CREATE EXTENSION IF NOT EXISTS hstore"
     sudo -u postgres psql template1 -c "CREATE EXTENSION IF NOT EXISTS fuzzystrmatch"
     sudo -u postgres psql -c "CREATE DATABASE otm OWNER otm"
     sudo -u postgres psql otm -c "CREATE EXTENSION IF NOT EXISTS postgis"
 fi
+set -e
 
 # Pillow
 apt-get install -yq libfreetype6-dev zlib1g-dev libpq-dev libxml2-dev
