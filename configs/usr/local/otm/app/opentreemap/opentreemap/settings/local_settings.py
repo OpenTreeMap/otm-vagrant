@@ -8,7 +8,7 @@ DATABASES = {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'otm',
         'USER': 'otm',
-        'PASSWORD': 'password',
+        'PASSWORD': 'otm',
         'HOST': 'localhost',
         'PORT': '5432'
     }
