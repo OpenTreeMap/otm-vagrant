@@ -3,15 +3,3 @@
 otm-core
 otm-tiler
 otm-ecoservice
-configs/etc/nginx/fastcgi_params
-configs/etc/nginx/koi-utf
-configs/etc/nginx/koi-win
-configs/etc/nginx/mime.types
-configs/etc/nginx/naxsi.rules
-configs/etc/nginx/naxsi_core.rules
-configs/etc/nginx/nginx.conf
-configs/etc/nginx/proxy_params
-configs/etc/nginx/scgi_params
-configs/etc/nginx/sites-available/default
-configs/etc/nginx/uwsgi_params
-configs/etc/nginx/win-utf
