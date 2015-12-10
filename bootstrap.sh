@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Make the script exit early if any command fails
 set -e
@@ -31,7 +31,6 @@ apt-get install -yq postgresql postgresql-server-dev-9.3 postgresql-contrib post
 service postgresql start
 
 # Don't do any DB stuff if it already exists
-set +e
 if ! sudo -u postgres psql otm -c ''; then
     # Need to drop and recreate cluster to get UTF8 DB encoding
     sudo -u postgres pg_dropcluster --stop 9.3 main
@@ -42,7 +41,6 @@ if ! sudo -u postgres psql otm -c ''; then
     sudo -u postgres psql -c "CREATE DATABASE otm OWNER otm"
     sudo -u postgres psql otm -c "CREATE EXTENSION IF NOT EXISTS postgis"
 fi
-set -e
 
 # Pillow
 apt-get install -yq libfreetype6-dev zlib1g-dev libpq-dev libxml2-dev
