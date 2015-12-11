@@ -19,7 +19,6 @@ To create a map do the following steps:
  - Create a user from your web browser (the URL should be `localhost:7070`). The email will be written to a file in `/usr/local/otm/emails/` inside the VM
  - SSH into the vagrant VM with `vagrant ssh`
  - Read the email with your user activation link (`cat /usr/local/otm/emails/*`) and activate the user by pasting the URL in it into your browser
- - Source the virtual environment using `source /usr/local/otm/env/bin/activate`
  - Change to the opentreemap directory using `cd /usr/local/otm/app/opentreemap`
  - Create a tree map using the `create_instance` management command, passing the username you created above. For example, to create a tree map with name "Philadelphia", url name `philly`, and admin user "sue", centered at longitude -75.1 and latitude 40.0:
 

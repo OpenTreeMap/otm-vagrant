@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Make the script exit early if any command fails
 set -e
@@ -8,10 +8,7 @@ apt-get update
 
 apt-get install -yq python-software-properties python-setuptools git
 
-add-apt-repository -y ppa:mapnik/boost
-add-apt-repository -y ppa:mapnik/v2.1.0
 add-apt-repository -y ppa:chris-lea/node.js
-add-apt-repository -y ppa:ubuntugis/ppa
 
 apt-get update
 
@@ -28,18 +25,17 @@ apt-get install -yq nodejs redis-server
 
 # Django + GeoDjango
 apt-get install -yq gettext libgeos-dev libproj-dev libgdal1-dev build-essential python-pip python-dev
-pip install virtualenv
 
 # DB
-apt-get install -yq postgresql postgresql-server-dev-9.1 postgresql-contrib postgresql-9.1-postgis-2.0
+apt-get install -yq postgresql postgresql-server-dev-9.3 postgresql-contrib postgresql-9.3-postgis-2.1
 service postgresql start
 
 # Don't do any DB stuff if it already exists
 if ! sudo -u postgres psql otm -c ''; then
     # Need to drop and recreate cluster to get UTF8 DB encoding
-    sudo -u postgres pg_dropcluster --stop 9.1 main
-    sudo -u postgres pg_createcluster --start 9.1 main  --locale="en_US.UTF-8"
-    sudo -u postgres psql -c "CREATE USER otm SUPERUSER PASSWORD 'password'"
+    sudo -u postgres pg_dropcluster --stop 9.3 main
+    sudo -u postgres pg_createcluster --start 9.3 main  --locale="en_US.UTF-8"
+    sudo -u postgres psql -c "CREATE USER otm SUPERUSER PASSWORD 'otm'"
     sudo -u postgres psql template1 -c "CREATE EXTENSION IF NOT EXISTS hstore"
     sudo -u postgres psql template1 -c "CREATE EXTENSION IF NOT EXISTS fuzzystrmatch"
     sudo -u postgres psql -c "CREATE DATABASE otm OWNER otm"
@@ -55,31 +51,27 @@ apt-get install -yq xvfb firefox
 npm install -g testem
 
 cd /usr/local/otm
-virtualenv env
 
 cd /usr/local/otm/app
-/usr/local/otm/env/bin/pip install -r requirements.txt
-/usr/local/otm/env/bin/pip install -r dev-requirements.txt
-/usr/local/otm/env/bin/pip install -r test-requirements.txt
+pip install -r requirements.txt
+pip install -r dev-requirements.txt
+pip install -r test-requirements.txt
+
+# Make local directories
+mkdir -p /usr/local/otm/static || true
+mkdir -p /usr/local/otm/media || true
+chown vagrant:vagrant /usr/local/otm/static
+chown vagrant:vagrant /usr/local/otm/media
 
 # OTM2 client-side bundle
 npm install
 # Weird issues with newest version of grunt in combination with grunt-browserify
 npm install -g grunt-cli@0.1.9
-grunt --dev
+sudo -u vagrant grunt --dev
 
 # Run Django migrations
-/usr/local/otm/env/bin/python opentreemap/manage.py migrate
-/usr/local/otm/env/bin/python opentreemap/manage.py create_system_user
-
-# Make local directories
-mkdir /usr/local/otm/static || true
-mkdir /usr/local/otm/media || true
-chown vagrant:vagrant /usr/local/otm/static
-chown vagrant:vagrant /usr/local/otm/media
-
-# Copy over static files
-/usr/local/otm/env/bin/python opentreemap/manage.py collectstatic --noinput
+python opentreemap/manage.py migrate
+python opentreemap/manage.py create_system_user
 
 # ecobenefits - init script
 apt-get install -yq libgeos-dev mercurial
@@ -96,7 +88,7 @@ if ! which godep; then
     sudo ln -sf $GOPATH/bin/godep /usr/local/bin/godep
 fi
 export GOPATH="/usr/local/ecoservice"
-make release
+make build
 
 # tiler
 apt-get install -yq libsigc++-2.0-dev libmapnik-dev mapnik-utils
@@ -114,4 +106,4 @@ service otm-unicorn start
 service tiler start
 service ecoservice start
 service celeryd start
-service nginx start
+service nginx restart
