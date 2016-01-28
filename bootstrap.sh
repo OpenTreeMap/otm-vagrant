@@ -50,8 +50,6 @@ apt-get install -yq xvfb firefox
 # OTM2 (JS testing)
 npm install -g testem
 
-cd /usr/local/otm
-
 cd /usr/local/otm/app
 pip install -r requirements.txt
 pip install -r dev-requirements.txt
