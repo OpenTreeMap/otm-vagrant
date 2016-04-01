@@ -1,5 +1,5 @@
-otm2-vagrant
-============
+otm-vagrant
+===========
 
 Vagrant files and scripts for setting up a local testing and development instance of OTM2
 
