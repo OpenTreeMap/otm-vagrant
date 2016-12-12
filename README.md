@@ -1,6 +1,14 @@
 otm-vagrant
 ===========
 
+#WARNING
+
+**This repository does not currently work with recent versions of OTM2
+which packages client-side assets with Webpack instead of Grunt and Browserfify.**
+
+---
+
+
 Vagrant files and scripts for setting up a local testing and development instance of OTM2
 
 __NOTE:__ This repository is intended _only_ for development and testing.  It is not intended for setting up a production OTM2 server.
@@ -11,7 +19,7 @@ To get started, do the following steps:
  - Clone this repository
  - Run the script `get-repos.sh`
  - Run the command `vagrant up`
- 
+
 This will give you a working installation of OTM2, but without any maps.
 
 To create a map do the following steps:
