@@ -1,26 +1,22 @@
 otm-vagrant
 ===========
 
-#WARNING
+Vagrant files and scripts for setting up a local testing and development instance of OpenTreeMap (OTM)
 
-**This repository does not currently work with recent versions of OTM2
-which packages client-side assets with Webpack instead of Grunt and Browserfify.**
-
----
-
-
-Vagrant files and scripts for setting up a local testing and development instance of OTM2
-
-__NOTE:__ This repository is intended _only_ for development and testing.  It is not intended for setting up a production OTM2 server.
+__NOTE:__ This repository is intended _only_ for development and testing.  It is not intended for setting up a production OTM server.
 
 To get started, do the following steps:
 
  - Install [Vagrant](http://www.vagrantup.com/) and [VirtualBox](https://www.virtualbox.org/)
  - Clone this repository
+ - Create a [Google Maps API key](https://developers.google.com/maps/documentation/javascript/get-api-key) and add a line to `configs/usr/local/otm/app/opentreemap/opentreemap/settings/local_settings.py`:
+```python
+GOOGLE_MAPS_API_KEY = 'the-api-key-you-just-created'
+```
  - Run the script `get-repos.sh`
  - Run the command `vagrant up`
 
-This will give you a working installation of OTM2, but without any maps.
+This will give you a working installation of OTM, but without any maps.
 
 To create a map do the following steps:
 
