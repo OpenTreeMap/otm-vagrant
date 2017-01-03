@@ -1,16 +1,12 @@
 #!/bin/bash
 
-# Make the script exit early if any command fails
-set -e
+set -e  # exit script early if any command fails
+set -x  # print commands before executing them
 
 # Add PPAs
 apt-get update
 
 apt-get install -yq python-software-properties python-setuptools git
-
-add-apt-repository -y ppa:chris-lea/node.js
-
-apt-get update
 
 cp -rTv --remove-destination /vagrant/configs /
 
@@ -20,8 +16,8 @@ service tiler stop || true
 service ecoservice stop || true
 service celeryd stop || true
 
-# nodejs & redis - needed for django and tiler
-apt-get install -yq nodejs redis-server
+# redis - needed for django
+apt-get install -yq redis-server
 
 # Django + GeoDjango
 apt-get install -yq gettext libgeos-dev libproj-dev libgdal1-dev build-essential python-pip python-dev
@@ -43,12 +39,7 @@ if ! sudo -u postgres psql otm -c ''; then
 fi
 
 # Pillow
-apt-get install -yq libfreetype6-dev zlib1g-dev libpq-dev libxml2-dev
-
-# OTM2 (UI testing)
-apt-get install -yq xvfb firefox
-# OTM2 (JS testing)
-npm install -g testem
+apt-get install -yq libfreetype6-dev
 
 cd /usr/local/otm/app
 pip install -r requirements.txt
@@ -60,12 +51,25 @@ mkdir -p /usr/local/otm/static || true
 mkdir -p /usr/local/otm/media || true
 chown vagrant:vagrant /usr/local/otm/static
 chown vagrant:vagrant /usr/local/otm/media
+chmod 777 /usr/local/otm/media
 
-# OTM2 client-side bundle
+# Use newer version of nodejs for bundling assets
+apt-get install -yq npm
+npm install -g nave
+NODE_VERSION_FOR_WEBPACK=0.12.15
+nave usemain $NODE_VERSION_FOR_WEBPACK
+
+# Bundle JS and CSS via webpack
 npm install
-# Weird issues with newest version of grunt in combination with grunt-browserify
-npm install -g grunt-cli@0.1.9
-sudo -u vagrant grunt --dev
+opentreemap/manage.py collectstatic_js_reverse
+npm rebuild node-sass  # otherwise "npm run build" fails
+npm run build
+python opentreemap/manage.py collectstatic --noinput
+
+# For UI testing
+apt-get install -yq xvfb firefox
+# For JS testing
+npm install -g testem
 
 # Run Django migrations
 python opentreemap/manage.py migrate
@@ -75,7 +79,7 @@ python opentreemap/manage.py create_system_user
 apt-get install -yq libgeos-dev mercurial
 cd /usr/local/ecoservice
 if ! go version; then
-    wget -q "https://go.googlecode.com/files/go1.2.linux-amd64.tar.gz" -O /tmp/go.tar.gz
+    wget -q "https://storage.googleapis.com/golang/go1.6.3.linux-amd64.tar.gz" -O /tmp/go.tar.gz
     tar -C /usr/local -xzf /tmp/go.tar.gz
     sudo ln -s /usr/local/go/bin/go /usr/local/bin/go
 fi
@@ -91,6 +95,10 @@ make build
 # tiler
 apt-get install -yq libsigc++-2.0-dev libmapnik-dev mapnik-utils
 cd /usr/local/tiler
+
+# Use older version of nodejs for building the tiler, and leave it installed for running the tiler
+NODE_VERSION_FOR_TILER=0.10.32
+nave usemain $NODE_VERSION_FOR_TILER
 npm install
 
 # nginx
