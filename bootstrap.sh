@@ -56,7 +56,7 @@ chmod 777 /usr/local/otm/media
 # Use newer version of nodejs for bundling assets
 apt-get install -yq npm
 npm install -g nave
-NODE_VERSION_FOR_WEBPACK=0.12.15
+NODE_VERSION_FOR_WEBPACK=4.8.0
 nave usemain $NODE_VERSION_FOR_WEBPACK
 
 # Bundle JS and CSS via webpack
