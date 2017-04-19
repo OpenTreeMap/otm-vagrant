@@ -20,7 +20,12 @@ service celeryd stop || true
 apt-get install -yq redis-server
 
 # Django + GeoDjango
-apt-get install -yq gettext libgeos-dev libproj-dev libgdal1-dev build-essential python-pip python-dev
+apt-get install -yq gettext libgeos-dev libproj-dev libgdal1-dev build-essential python-dev
+
+# pip
+cd /tmp
+wget https://bootstrap.pypa.io/get-pip.py
+python get-pip.py pip==9.0.*
 
 # DB
 apt-get install -yq postgresql postgresql-server-dev-9.3 postgresql-contrib postgresql-9.3-postgis-2.1
@@ -56,7 +61,7 @@ chmod 777 /usr/local/otm/media
 # Use newer version of nodejs for bundling assets
 apt-get install -yq npm
 npm install -g nave
-NODE_VERSION_FOR_WEBPACK=0.12.15
+NODE_VERSION_FOR_WEBPACK=4.8.0
 nave usemain $NODE_VERSION_FOR_WEBPACK
 
 # Bundle JS and CSS via webpack
