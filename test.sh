@@ -8,14 +8,16 @@ cd /usr/local/ecoservice
 godep go test eco/*
 
 cd /usr/local/otm/app/
-grunt check
+yarn run check
 
-export DISPLAY=":99.0"
-Xvfb $DISPLAY 2>/dev/null >/dev/null &
-testem ci
+yarn run test
 
 flake8 --exclude migrations,opentreemap/settings/local_settings.py opentreemap
-# Need to run grunt before running the UI tests
-grunt
-python opentreemap/manage.py test
-python opentreemap/manage.py test  -p 'uitest*.py'
+# Need to build assets before running the UI tests
+python opentreemap/manage.py collectstatic_js_reverse
+yarn run build
+python opentreemap/manage.py collectstatic --noinput
+
+cd opentreemap
+python manage.py test
+xvfb-run python manage.py test  -p 'uitest*.py'

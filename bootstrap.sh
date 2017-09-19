@@ -4,6 +4,8 @@ set -e  # exit script early if any command fails
 set -x  # print commands before executing them
 
 # Add PPAs
+sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
 apt-get update
 
 apt-get install -yq python-software-properties python-setuptools git
@@ -24,7 +26,7 @@ apt-get install -yq gettext libgeos-dev libproj-dev libgdal1-dev build-essential
 
 # pip
 cd /tmp
-wget https://bootstrap.pypa.io/get-pip.py
+wget -nv https://bootstrap.pypa.io/get-pip.py
 python get-pip.py pip==9.0.*
 
 # DB
@@ -54,27 +56,21 @@ pip install -r test-requirements.txt
 # Make local directories
 mkdir -p /usr/local/otm/static || true
 mkdir -p /usr/local/otm/media || true
-chown vagrant:vagrant /usr/local/otm/static
-chown vagrant:vagrant /usr/local/otm/media
-chmod 777 /usr/local/otm/media
 
-# Use newer version of nodejs for bundling assets
-apt-get install -yq npm
-npm install -g nave
-NODE_VERSION_FOR_WEBPACK=4.8.0
-nave usemain $NODE_VERSION_FOR_WEBPACK
+apt-get install -yq nodejs
+npm install -g yarn
 
 # Bundle JS and CSS via webpack
-npm install
-opentreemap/manage.py collectstatic_js_reverse
-npm rebuild node-sass  # otherwise "npm run build" fails
+yarn --force
+python opentreemap/manage.py collectstatic_js_reverse
 npm run build
 python opentreemap/manage.py collectstatic --noinput
 
 # For UI testing
-apt-get install -yq xvfb firefox
-# For JS testing
-npm install -g testem
+apt-get install -yq xvfb
+# We use an outdated version of firefox to avoid incompatibilities with selenium
+wget -nv https://s3.amazonaws.com/packages.ci.opentreemap.org/firefox-mozilla-build_46.0.1-0ubuntu1_amd64.deb -O /tmp/firefox.deb
+dpkg -i /tmp/firefox.deb
 
 # Run Django migrations
 python opentreemap/manage.py migrate
@@ -84,7 +80,7 @@ python opentreemap/manage.py create_system_user
 apt-get install -yq libgeos-dev mercurial
 cd /usr/local/ecoservice
 if ! go version; then
-    wget -q "https://storage.googleapis.com/golang/go1.6.3.linux-amd64.tar.gz" -O /tmp/go.tar.gz
+    wget -nv "https://storage.googleapis.com/golang/go1.6.3.linux-amd64.tar.gz" -O /tmp/go.tar.gz
     tar -C /usr/local -xzf /tmp/go.tar.gz
     sudo ln -s /usr/local/go/bin/go /usr/local/bin/go
 fi
@@ -98,18 +94,18 @@ export GOPATH="/usr/local/ecoservice"
 make build
 
 # tiler
-apt-get install -yq libsigc++-2.0-dev libmapnik-dev mapnik-utils
+apt-get install -yq checkinstall g++ libstdc++-5-dev pkg-config libcairo2-dev libjpeg8-dev libgif-dev libpango1.0-dev
 cd /usr/local/tiler
 
-# Use older version of nodejs for building the tiler, and leave it installed for running the tiler
-NODE_VERSION_FOR_TILER=0.10.32
-nave usemain $NODE_VERSION_FOR_TILER
-npm install
+yarn --force
 
 # nginx
 apt-get install -yq nginx
 rm /etc/nginx/sites-enabled/default || true
 ln -sf /etc/nginx/sites-available/otm.conf /etc/nginx/sites-enabled/otm
+
+chown -R vagrant:vagrant /usr/local/otm/static
+chown -R vagrant:vagrant /usr/local/otm/media
 
 initctl reload-configuration
 
