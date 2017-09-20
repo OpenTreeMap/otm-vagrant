@@ -10,7 +10,7 @@ godep go test eco/*
 cd /usr/local/otm/app/
 yarn run check
 
-yarn run test
+xvfb-run yarn run test
 
 flake8 --exclude migrations,opentreemap/settings/local_settings.py opentreemap
 # Need to build assets before running the UI tests
