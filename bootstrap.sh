@@ -16,7 +16,7 @@ cp -rTv --remove-destination /vagrant/configs /
 service otm-unicorn stop || true
 service tiler stop || true
 service ecoservice stop || true
-service celeryd stop || true
+service celery stop || true
 
 # redis - needed for django
 apt-get install -yq redis-server
@@ -112,5 +112,5 @@ initctl reload-configuration
 service otm-unicorn start
 service tiler start
 service ecoservice start
-service celeryd start
+service celery start
 service nginx restart
