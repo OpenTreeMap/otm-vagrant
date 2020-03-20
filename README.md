@@ -9,6 +9,7 @@ To get started, do the following steps:
 
  - Install [Vagrant](http://www.vagrantup.com/) and [VirtualBox](https://www.virtualbox.org/)
  - Clone this repository
+ - Copy `configs/etc/init/otm-unicorn.conf.template` into a new file `configs/etc/init/otm-unicorn.conf`
  - Create a [Google Maps API key](https://developers.google.com/maps/documentation/javascript/get-api-key) and replace the `GOOGLE_MAPS_KEY` in  `configs/etc/init/otm-unicorn.conf` with the key you created
  - Create a [Esri API credentials](https://developers.arcgis.com/documentation/core-concepts/security-and-authentication/accessing-arcgis-online-services/) and replace the `ESRI_CLIENT_ID` and `ESRI_CLIENT_SECRET` in  `configs/etc/init/otm-unicorn.conf` with the credentials you created
  - Run the script `get-repos.sh`
