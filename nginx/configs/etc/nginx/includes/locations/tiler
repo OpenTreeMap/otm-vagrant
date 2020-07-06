@@ -1,0 +1,5 @@
+location /tile/ {
+    proxy_redirect off;
+
+    proxy_pass http://tile/;
+}
