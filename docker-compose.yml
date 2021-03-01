@@ -46,33 +46,39 @@ services:
             - ${HOME}/tools/localstack/data:/usr/data
 
     otm-core:
-        image: otm-core:1.0
-        command: tail -f /dev/null
-        environment:
-            - ESRI_CLIENT_ID=
-            - ESRI_CLIENT_SECRET=
-            - GOOGLE_MAPS_KEY=
-        working_dir: /usr/local/otm/app/opentreemap
-        ports:
-            # - '12000:12000'
-            - '3000:3000'
-        volumes:
-            - ./otm_core/opentreemap:/usr/local/otm/app/opentreemap
-            - ${HOME}/tools/docker/volumes/otm/static:/usr/local/otm/static
-            - ${HOME}/tools/docker/volumes/otm/media:/usr/local/otm/media
+       image: otm-core:1.0
+       # command: gunicorn -w 2 -b "0.0.0.0:12000" opentreemap.wsgi:application
+       command: python manage.py runserver 0.0.0.0:12000
+       #command: tail -f /dev/null
+       restart: always
+       depends_on:
+           - database
+       environment:
+           - ESRI_CLIENT_ID=
+           - ESRI_CLIENT_SECRET=
+           - GOOGLE_MAPS_KEY=
+       working_dir: /usr/local/otm/app/opentreemap
+       ports:
+           - '12000:12000'
+           # - '3000:3000'
+       volumes:
+           - ${HOME}/tools/docker/volumes/otm/static:/usr/local/otm/static
+           - ${HOME}/tools/docker/volumes/otm/media:/usr/local/otm/media
 
-    otm-celery:
-        image: otm-core:1.0
-        command: celery -A "opentreemap.celery.app" -b "redis://redis:6379" worker -l debug 
-        working_dir: /usr/local/otm/app/opentreemap
-        volumes:
-            - ./otm_core/opentreemap:/usr/local/otm/app/opentreemap
-            - ./docker/volumes/static:/usr/local/otm/static
-            - ./docker/volumes/media:/usr/local/otm/media
+#   otm-celery:
+#       image: otm-core:1.0
+#       #command: celery -A "opentreemap.celery.app" -b "redis://redis:6379" worker -l debug 
+#       command: tail -f /dev/null
+#       working_dir: /usr/local/otm/app/opentreemap
+#       volumes:
+#           - ./otm_core/opentreemap:/usr/local/otm/app/opentreemap
+#           - ./docker/volumes/static:/usr/local/otm/static
+#           - ./docker/volumes/media:/usr/local/otm/media
 
     otm-tiler:
         image: otm-tiler:1.0
-        command: node server.js
+        command: node --inspect=0.0.0.0:9229 server.js
+        #command: tail -f /dev/null
         working_dir: /usr/local/tiler
         environment:
             - OTM_CACHE_HOST=redis
@@ -85,14 +91,17 @@ services:
 
     otm-ecoservice:
         image: otm-ecoservice:1.0
-        command: ./ecobenefits
-        working_dir: /usr/local/ecoservice/ecoservice
+        command: ./ecoservice/ecobenefits
+        #command: tail -f /dev/null
+        working_dir: /usr/local/ecoservice
+        restart: always
+        depends_on:
+            - database
         environment:
             - OTM_ECO_HOST=0.0.0.0
             - OTM_DB_HOST=database
         ports:
             - '13000:13000'
-
 
 volumes:
     pg_data:
