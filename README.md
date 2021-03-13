@@ -38,7 +38,18 @@ On Windows the OTM source code is shared with the virtual machine via a one-way 
 
 
 ## Running with Docker
+
 Everything can be run using the `docker-compose.yml`, but with a few changes.
+
+### restore a database backup
+
+Download a database dump from the S3 backups. Then, use `psql` to import the database dump into a the running postgres container.
+
+Example:
+
+```
+psql -h localhost -U otm -d otm <~/20210308.dump
+```
 
 There are a few changes that need to be made:
 * The volumes for nginx need to be updated. Both nginx and otm-core need to share a local volume for the static and media directories

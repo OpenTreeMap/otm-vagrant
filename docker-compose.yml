@@ -2,7 +2,7 @@ version: '3'
 services:
     nginx:
         image: nginx:latest
-        network_mode: "host"
+        restart: always
         volumes:
             - ./configs/etc/nginx/sites-available:/etc/nginx/sites-available
             - ./configs/etc/nginx/sites-enabled:/etc/nginx/sites-enabled
@@ -11,6 +11,8 @@ services:
             - ./configs/etc/nginx/includes:/etc/nginx/includes
             - ${HOME}/tools/docker/volumes/otm/static:/usr/local/otm/static
             - ${HOME}/tools/docker/volumes/otm/media:/usr/local/otm/media
+        ports:
+            - '8080:8080'
 
     database:
         image: kartoza/postgis:9.6-2.4
@@ -62,8 +64,8 @@ services:
            - '12000:12000'
            # - '3000:3000'
        volumes:
-           - ${HOME}/tools/docker/volumes/otm/static:/usr/local/otm/static
-           - ${HOME}/tools/docker/volumes/otm/media:/usr/local/otm/media
+           - ${HOME}/tools/docker/volumes/otm/static:/usr/local/otm/app/static
+           - ${HOME}/tools/docker/volumes/otm/media:/usr/local/otm/app/media
 
 #   otm-celery:
 #       image: otm-core:1.0
