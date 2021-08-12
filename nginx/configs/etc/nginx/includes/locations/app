@@ -1,0 +1,17 @@
+location /static/ {
+  alias /usr/local/otm/static/;
+}
+
+location /media/ {
+alias /usr/local/otm/media/;
+}
+
+location / {
+  proxy_set_header Host $http_host;
+  proxy_redirect off;
+
+  if (!-f $request_filename) {
+    proxy_pass http://app;
+    break;
+  }
+}

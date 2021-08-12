@@ -35,3 +35,26 @@ For further help on how to use `create_instance`, run `./manage.py create_instan
 To run on Windows you must install [Cygwin](https://www.cygwin.com) (including `rsync` and `openssh`) and start a Unix shell like `bash` to run the install scripts.
 
 On Windows the OTM source code is shared with the virtual machine via a one-way `rsync` from Windows host to Ubuntu guest. When you update source code files you must run `vagrant rsync` from your Windows Unix shell. See also [vagrant rsync-auto](http://docs.vagrantup.com/v2/cli/rsync-auto.html).
+
+
+## Running with Docker
+
+Everything can be run using the `docker-compose.yml`, but with a few changes.
+
+### restore a database backup
+
+Download a database dump from the S3 backups. Then, use `psql` to import the database dump into a the running postgres container.
+
+Example:
+
+```
+psql -h localhost -U otm -d otm <~/20210308.dump
+```
+
+There are a few changes that need to be made:
+* The volumes for nginx need to be updated. Both nginx and otm-core need to share a local volume for the static and media directories
+* The otm-core and otm-tiler hostname in the nginx configs should be updated to localhost
+* Running this requires localstack to be setup
+* Each repository under otm-vagrant (otm-core, otm-ecoservice, otm-tiler) needs to have the Dockerfile built with otm-[name]:1.0
+* Create a symlink for otm-core called otm_core
+* Create a symlink for otm-tiler called otm_tiler
